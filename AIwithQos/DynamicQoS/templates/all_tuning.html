@@ -1,0 +1,159 @@
+{% extends 'base2.html'%}
+{% block content%}
+    {% load staticfiles %}
+        <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+							<div class="kt-subheader__main">
+								<h3 class="kt-subheader__title">Tuning Dashboard</h3>
+								<span class="kt-subheader__separator kt-subheader__separator--v"></span>
+
+
+								<div class="kt-input-icon kt-input-icon--right kt-subheader__search kt-hidden">
+									<input type="text" class="form-control" placeholder="Search order..." id="generalSearch">
+									<span class="kt-input-icon__icon kt-input-icon__icon--right">
+										<span><i class="flaticon2-search-1"></i></span>
+									</span>
+								</div>
+							</div>
+							<div class="kt-subheader__toolbar">
+
+							</div>
+						</div>
+
+    <div class="kt-portlet" style="margin-left:40px; margin-right:40px; margin-top:40px">
+
+	<!--begin::Form-->
+
+
+
+<div class="kt-portlet kt-portlet--mobile" style="margin-top: 40px;margin-left: 12px;margin-right: 12px">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Tuning
+                </h3>
+
+            </div>
+            <div class="float-left" style="margin-top: 12px;">
+                <button onclick="location.href='{% url 'run_tuning' %}'"  class="btn btn-success">Start</button>
+                <button type="button" class="btn btn-danger">Stop</button>
+            </div>
+{#            <div class="kt-portlet__head-toolbar">#}
+{#                <div class="kt-portlet__head-wrapper">#}
+{#                    <div class="kt-portlet__head-actions">#}
+{#                        <select class="costum-select" id="topoSelect">#}
+{#                            <option value="" disabled selected>Select a topologie</option>#}
+{#                        </select>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+        <div class="kt-portlet__body">
+
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Tuning id</th>
+                    <th>Time</th>
+                    <th>Interface Name</th>
+                    <th>Tos Value</th>
+                    <th>tos_min_old</th>
+                    <th>tos_max_old</th>
+                    <th>tos_min_new</th>
+                    <th>tos_max_new</th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        var url1 = 'http://localhost:8000/api/v1/tuning';
+        var periodUrl = '';
+        var table;
+        var periodTable;
+        var periodTopo = '';
+        var startPeriod = '';
+        var endPeriod = '';
+        $(document).ready(function () {
+            table = $('#example').DataTable({
+                ajax: {
+      url: url1,
+      dataSrc: ""
+    },
+    columns: [
+        { "data": "id" },
+        { "data": "timestamp" },
+        { "data": "interface_tos"},
+        { "data": "tos_dscp" },
+        { "data": "tos_min_old"},
+        { "data": "tos_max_old"},
+        { "data": "tos_min_new"},
+        { "data": "tos_max_new"},
+
+    ]
+            });
+
+            url1 = 'http://localhost:8000/api/v1/tuning';
+            table.ajax.url(url1).load();
+            reloadDataTable();
+        });
+let id = 0;
+        $('#example tbody').on('click', 'button', function () {
+    let data = table.row($(this).parents('tr')).data();
+    let class_name = $(this).attr('class');
+    if (class_name === 'btn btn-sm btn-info') {
+        // EDIT button
+
+    } else {
+
+    }
+       id = data['id'];
+
+});
+        $('#form1').on('submit', function (e) {
+    e.preventDefault();
+    let $this = $(this);
+    {#let type = $('#type').val();#}
+    let method = '';
+    let url = 'http://localhost:8000/api/v1/tuning/';
+
+
+    $.ajax({
+        url: url,
+        method: method,
+        data: $this.serialize(),
+        success: function(data, textStatus, jqXHR) {
+         table.ajax.url(url1).load();
+         reloadDataTable();
+    }
+    })
+});
+
+
+
+
+        function reloadDataTable() {
+            setInterval(function () {
+                table.ajax.reload();
+            }, 5000);
+        }
+
+
+
+    </script>
+
+
+{%endblock%}

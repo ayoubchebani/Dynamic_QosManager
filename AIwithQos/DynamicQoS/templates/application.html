@@ -1,0 +1,35 @@
+{% extends 'base2.html'%}
+{% block content %}
+
+  <h2>Application Form</h2>
+
+  <form method="post" id="app_form" action="{% url 'add_application' police_id %}" data-application-url="{% url 'ajax_load_applications' %}" novalidate >
+    {% csrf_token %}
+    <table>
+      {{ app_form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+    <a href="#">Nevermind</a>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_business_type").change(function () {
+      var url = $("#app_form").attr("data-application-url");
+      var business_type_id = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'business_type': business_type_id
+        },
+        success: function (data) {
+          $("#id_business_app").html(data);
+        }
+      });
+
+    });
+  </script>
+
+
+{% endblock %}

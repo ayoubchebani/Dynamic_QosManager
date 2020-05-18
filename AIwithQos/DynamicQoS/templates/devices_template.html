@@ -1,0 +1,336 @@
+{% extends 'base2.html'%}
+{% load staticfiles %}
+{% block css %}
+    <link href={% static '/assets/ilyes.css' %} rel="stylesheet" type="text/css">
+{% endblock %}
+{% block content%}
+
+    <div id="ilyes">
+        <div class="cssload-container">
+	<div class="cssload-whirlpool"></div>
+</div>
+    </div>
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader__main">
+            <a href="{% url 'policy_dashboard' policy_id %} "><span><i class="fas fa-arrow-left"></i></span></a>
+
+
+                                {% if policy.deploy  %}
+                                <a id="deployBtn" href="{% url 'policy_deployment' policy_id %}" class="btn btn-label-success btn-bold disabled">
+									Deploy
+								</a>
+								<a id="removeBtn" href="{% url 'policy_remove' policy_id %}" class="btn btn-label-danger btn-bold">
+									Remove
+								</a>
+                                {% else %}
+                                    <a id="deployBtn" href="{% url 'policy_deployment' policy_id %}" class="btn btn-label-success btn-bold">
+									Deploy
+								</a>
+								<a id="removeBtn" href="{% url 'policy_remove' policy_id %}" class="btn btn-label-danger btn-bold disabled">
+									Remove
+								</a>
+                                {% endif %}
+
+								<div class="kt-input-icon kt-input-icon--right kt-subheader__search">
+									<input type="text" class="form-control" placeholder="Search order..." id="generalSearch">
+									<span class="kt-input-icon__icon kt-input-icon__icon--right">
+										<span><i class="flaticon2-search-1"></i></span>
+									</span>
+								</div>
+							</div>
+        <div class="kt-subheader__toolbar">
+								<div class="kt-subheader__wrapper">
+									<a href="#" class="btn kt-subheader__btn-daterange" id="kt_dashboard_daterangepicker" data-toggle="kt-tooltip" title="" data-placement="left" data-original-title="">
+										<span class="kt-subheader__btn-daterange-title" id="kt_dashboard_daterangepicker_title">Today</span>&nbsp;
+										<span class="kt-subheader__btn-daterange-date" id="kt_dashboard_daterangepicker_date">{{ today }}</span>
+										<i class="flaticon2-calendar-1"></i>
+									</a>
+								</div>
+							</div>
+    </div>
+    <div class="col-xl-4" style="margin-left: 30px;margin-right: 20px;margin-top:30px;padding-right: 0px; width: 93.68%">
+        <div class="kt-portlet kt-portlet--height-fluid">
+										<div class="kt-widget14">
+											<div class="kt-widget14__header">
+												<h3 class="kt-widget14__title">
+													Policy Details
+												</h3>
+												<span class="kt-widget14__desc">
+
+												</span>
+											</div>
+											<div class="kt-widget14__content ">
+												<div class="kt-widget14__legends d-flex d-flex h5 justify-content-between ">
+                                                    <div class="kt-widget14__legend">
+														<span class="kt-widget14__bullet kt-bg-success"></span>
+														<span class="kt-widget14__stats">{{ applications_len }} <a href="{% url 'applications' policy_id %}">Applications</a></span>
+													</div>
+													<div class="kt-widget14__legend">
+														<span class="kt-widget14__bullet kt-bg-success"></span>
+														<span class="kt-widget14__stats">{{ device_len }} Devices</span>
+													</div>
+
+													<div class="kt-widget14__legend">
+														<span class="kt-widget14__bullet kt-bg-warning"></span>
+														<span class="kt-widget14__stats">{{ ingress }} Ingress Ports</span>
+													</div>
+													<div class="kt-widget14__legend">
+														<span class="kt-widget14__bullet kt-bg-brand"></span>
+														<span class="kt-widget14__stats">{{ wan }} Wan Ports</span>
+													</div>
+                                                    <div class="kt-widget14__legend">
+														<span class="kt-widget14__bullet kt-bg-brand"></span>
+														<span class="kt-widget14__stats">{{ egress }} Egress Ports</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+    </div>
+    <div class="kt-portlet" style="margin-left: 40px;margin-right: 40px">
+								<div class="kt-portlet__body  kt-portlet__body--fit">
+									<div class="row row-no-padding row-col-separator-xl">
+                                        {% for group in groups %}
+										<div class="col-md-12 col-lg-6 col-xl-3">
+
+											<!--begin::New Users-->
+											<div class="kt-widget24">
+												<div class="kt-widget24__details">
+													<div class="kt-widget24__info">
+														<h4 class="kt-widget24__title">
+															{{ group.name }}
+														</h4>
+														<span class="kt-widget24__desc">
+{#															Joined New User#}
+														</span>
+													</div>
+													<span class="kt-widget24__stats kt-font-success">
+														{{ group.all_applications }}
+													</span>
+												</div>
+                                                {% for app in group.list_applications %}
+												<div class="kt-widget24__stats kt-font-success">
+													{{ app.name }}
+												</div>
+                                                    {% endfor %}
+												<div class="kt-widget24__action">
+													<span class="kt-widget24__change">
+{#														Change#}
+													</span>
+													<span class="kt-widget24__number">
+{#														90%#}
+													</span>
+												</div>
+											</div>
+
+											<!--end::New Users-->
+										</div>
+                                        {% endfor %}
+
+									</div>
+								</div>
+							</div>
+    <div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											</button>
+										</div>
+										<div class="modal-body">
+										 <form id="form1" role="form">
+
+                        <div class="form-group">
+                            <label for="hostname"><span class="glyphicon glyphicon-file"></span> Hostname</label>
+                            <input type="text" name="hostname" id="hostname">
+                        </div>
+                        <input type="hidden" id="type" name="type" value="">
+                        <button type="submit" class="btn btn-success btn-block" ><span
+                                class="glyphicon glyphicon-ok" ></span> OK
+                        </button>
+                    </form>
+										</div>
+									</div>
+								</div>
+							</div>
+    <div class="modal fade" id="kt_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											</button>
+										</div>
+										<div class="modal-body">
+                                            <p id="render">Are you sure you?</p>
+
+											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-danger" data-dismiss="modal" id="delete">Delete</button>
+										</div>
+									</div>
+								</div>
+    </div>
+<div class="kt-portlet kt-portlet--mobile" style="margin-right:40px; margin-left:40px;">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Devices Table
+                </h3>
+
+            </div>
+{#            <div class="kt-portlet__head-toolbar">#}
+{#                <div class="kt-portlet__head-wrapper">#}
+{#                    <div class="kt-portlet__head-actions">#}
+{#                        <select class="costum-select" id="topoSelect">#}
+{#                            <option value="" disabled selected>Select a topologie</option>#}
+{#                        </select>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+        <div class="kt-portlet__body">
+
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Device id</th>
+                    <th>Device Name</th>
+                    <th>username</th>
+                    <th>password</th>
+                    <th>address</th>
+                    <th>enable secret</th>
+                    <th style='width:15%' >Action</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src={% static '/assets/ilyes.js' %}></script>
+    <script>
+        var url1 = 'http://localhost:8000/api/v1/devices?topology_id={{ topology_id }}';
+        var periodUrl = '';
+        var table;
+        var periodTable;
+        var periodTopo = '';
+        var startPeriod = '';
+        var endPeriod = '';
+        $(document).ready(function () {
+            table = $('#example').DataTable({
+                ajax: {
+      url: url1,
+      dataSrc: ""
+    },
+    columns: [
+        { "data": "id" },
+        { "data": "hostname" },
+        { "data": "device_username"},
+        { "data": "device_password"},
+        { "data": "device_address"},
+        { "data": "device_enable"},
+         {
+            "data": null,
+            "defaultContent": '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#kt_modal_4" >Edit</button>' + '&nbsp;&nbsp' +
+            '<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#kt_modal_3">Delete</button>'
+        }
+    ]
+            });
+
+            url1 = 'http://localhost:8000/api/v1/devices?topology_id={{ topology_id }}';
+            table.ajax.url(url1).load();
+            reloadDataTable();
+        });
+let id = 0;
+        $('#example tbody').on('click', 'button', function () {
+    let data = table.row($(this).parents('tr')).data();
+    let class_name = $(this).attr('class');
+    if (class_name === 'btn btn-sm btn-info') {
+        // EDIT button
+        $('#hostname').val(data['hostname']);
+        $('#type').val('edit');
+        $('#modal_title').text('EDIT');
+        $("#myModal").modal();
+    } else {
+        // DELETE button
+        $('#modal_title').text('DELETE');
+        $("#confirm").modal();
+    }
+       id = data['id'];
+
+});
+        $('#form1').on('submit', function (e) {
+    e.preventDefault();
+    let $this = $(this);
+    let type = $('#type').val();
+    let method = '';
+    let url = 'http://localhost:8000/api/v1/devices/';
+    if (type == 'new') {
+        // new
+        method = 'POST';
+    } else {
+        // edit
+        url = url + id + '/';
+        method = 'PUT';
+    }
+
+    $.ajax({
+        url: url,
+        method: method,
+        data: $this.serialize(),
+        success: function(data, textStatus, jqXHR) {
+         table.ajax.url(url1).load();
+         reloadDataTable();
+         $('#kt_modal_4').modal('hide');
+         $('.modal-backdrop').remove();
+    }
+    })
+});
+
+
+        $('#kt_modal_3').on('click', '#delete', function (e) {
+    $.ajax({
+        url: 'http://localhost:8000/api/v1/devices/' + id + '/',
+        method: 'DELETE',
+        success: function(data, textStatus, jqXHR) {
+         table.ajax.url(url1).load();
+         reloadDataTable();
+    }
+    })
+});
+
+        function reloadDataTable() {
+            setInterval(function () {
+                table.ajax.reload();
+            }, 5000);
+        }
+
+
+
+
+    </script>
+
+<script>$('.btn').on('click', function() {
+    console.log("khra");
+    var $this = $(this);
+  $this.button('loading');
+    setTimeout(function() {
+       $this.button('reset');
+   }, 8000);
+});</script>
+{%endblock%}

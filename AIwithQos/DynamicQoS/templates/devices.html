@@ -1,0 +1,205 @@
+{% extends 'base2.html'%}
+{% block content%}
+
+{% load staticfiles %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#">Applications Details</a>
+        </li>
+    </ol>
+
+    <div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+              <i class="fa fa-plus"></i> Custom Application
+            </div>
+            <div class="card-body">
+                  <form method="post" id="custom_form" action="{% url 'add_custom_application' police_id %}">
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">business_type :</label>
+                            {{ custom_form.custom_name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputLastName">business_app:</label>
+                            {{ custom_form.protocol_type}}
+                        </div>
+                    </div>
+                       <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputLastName">business_app:</label>
+                            {{ custom_form.port_number}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">app_priority:</label>
+                            {{ custom_form.app_priority}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">drop_prob:</label>
+                            {{ custom_form.drop_prob}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">begin_time :</label>
+                            {{ custom_form.begin_time}}
+                        </div>
+                    </div>
+                      <div class="form-group">
+                    <div class="col-md-8">
+                        <label for="exampleInputName"> end_time:</label>
+                        {{ custom_form.end_time}}
+                    </div>
+                    </div>
+                      <div class="form-group">
+                    <div class="col-md-8">
+                        <label for="exampleInputName">source :</label>
+                        {{ custom_form.source}}
+                    </div>
+                    </div>
+                      <div class="form-group">
+                    <div class="col-md-8">
+                        <label for="exampleInputName">destination :</label>
+                        {{ custom_form.destination}}
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary btn-block" >Add</button>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+              <i class="fa fa-plus"></i> New Application
+            </div>
+            <div class="card-body">
+                  <form method="post" id="app_form" action="{% url 'add_application' police_id %}" data-application-url="{% url 'ajax_load_applications' %}" novalidate >
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">business_type :</label>
+                            {{ app_form.business_type}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputLastName">business_app:</label>
+                            {{ app_form.business_app}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">app_priority:</label>
+                            {{ app_form.app_priority}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">drop_prob:</label>
+                            {{ app_form.drop_prob}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputName">begin_time :</label>
+                            {{ app_form.begin_time}}
+                        </div>
+                    </div>
+                      <div class="form-group">
+                    <div class="col-md-8">
+                        <label for="exampleInputName"> end_time:</label>
+                        {{ app_form.end_time}}
+                    </div>
+                    </div>
+                      <div class="form-group">
+                    <div class="col-md-8">
+                        <label for="exampleInputName">source :</label>
+                        {{ app_form.source}}
+                    </div>
+                    </div>
+                      <div class="form-group">
+                    <div class="col-md-8">
+                        <label for="exampleInputName">destination :</label>
+                        {{ app_form.destination}}
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary btn-block" >Add</button>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+              <i class="fa fa-folder-open"></i> Recent Applications
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for app in apps %}
+                    <li class="list-group-item">
+                            <div>
+                                <i class="fa fa-th-list">
+                                </i> <h5 style="display: inline-block">{{ app.name }}</h5>
+
+                                <span class="pull-right">
+                                     <a class="mr-3 d-inline-block pull-right" data-id="{{ app.id }}" href="#" ><i class="fa fa-trash" data-toggle="modal" ></i></a>
+
+
+                                    <a class="mr-3 d-inline-block pull-right" href="#" ><i class="fa fa-stream"></i></a>
+                                </span>
+                            </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a  class="card-footer clearfix small z-1" href="#">
+              <span class="float-left">View all</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+        </div>
+    </div>
+
+    </div>
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_business_type").change(function () {
+      var url = $("#app_form").attr("data-application-url");
+      var business_type_id = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'business_type': business_type_id
+        },
+        success: function (data) {
+          $("#id_business_app").html(data);
+        }
+      });
+
+    });
+  </script>
+
+
+{%endblock%}

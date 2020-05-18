@@ -1,0 +1,342 @@
+{% extends 'base2.html'%}
+{% block content%}
+{% load staticfiles %}
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader__main">
+                <a href="{% url 'policy_dashboard' police_id %} "><span><i class="fas fa-arrow-left"></i></span></a>
+                <h3 class="kt-subheader__title">Policy Dashboard</h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+
+
+                <div class="kt-input-icon kt-input-icon--right kt-subheader__search kt-hidden">
+                    <input type="text" class="form-control" placeholder="Search order..." id="generalSearch">
+                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
+                        <span><i class="flaticon2-search-1"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="kt-subheader__toolbar">
+
+            </div>
+    </div>
+
+
+    <div class="row" style="margin-top: 50px">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+              <i class="fa fa-plus"></i> Custom Application
+            </div>
+            <div class="card-body">
+                  <form method="post" id="custom_form" action="{% url 'add_custom_application' police_id %}">
+                   {% csrf_token %}
+                         {{ custom_form.non_field_errors }}
+
+  {% for hidden_field in custom_form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  <table class="table" style="border: none;">
+    {% for field in custom_form.visible_fields %}
+      <tr>
+        <th style='color:#646c9a;' >{{ field.label_tag }}</th>
+        <td>
+
+          {{ field }}
+          {{ field.help_text }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+                  <div class="form-group">
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary btn-block" style="margin-left: 70px">Add</button>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+              <i class="fa fa-plus"></i> New Application
+            </div>
+            <div class="card-body" style="padding-bottom: 18px;">
+                  <form method="post" id="app_form" action="{% url 'add_application' police_id %}" data-application-url="{% url 'ajax_load_applications' %}" >
+
+                   {% csrf_token %}
+                         {{ app_form.non_field_errors }}
+
+  {% for hidden_field in app_form.hidden_fields %}
+    {{ hidden_field.errors }}
+    {{ hidden_field }}
+  {% endfor %}
+
+  <table class="table">
+    {% for field in app_form.visible_fields %}
+      <tr>
+        <th style='color:#646c9a;' >{{ field.label_tag }}</th>
+        <td>
+
+          {{ field }}
+          {{ field.help_text }}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+                  <div class="form-group">
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 68px; margin-left: 70px">Add</button>
+                        </div>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
+
+    </div>
+    <div class="row" style="margin-top: 20px">
+        <div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											</button>
+										</div>
+										<div class="modal-body">
+										 <form id="form1" role="form">
+
+                        <div class="form-group">
+                            <label for="mark"><span class="glyphicon glyphicon-file"></span> Mark</label>
+                            <select name="mark" required="" id="mark">
+                                <option value="" selected="">---------</option>
+                                <option value="CS6">CS6</option>
+                                <option value="EF">EF</option>
+                                <option value="CS5">CS5</option>
+                                <option value="AF43">AF43</option>
+                                <option value="AF42">AF42</option>
+                                <option value="AF41">AF41</option>
+                                <option value="CS4">CS4</option>
+                                <option value="AF33">AF33</option>
+                                 <option value="AF32">AF32</option>
+                                <option value="AF31">AF31</option>
+                                <option value="CS3">CS3</option>
+                                <option value="AF23">AF23</option>
+                                <option value="AF22">AF22</option>
+                                <option value="AF21">AF21</option>
+                                <option value="CS2">CS2</option>
+                                <option value="AF13">AF13</option>
+                                <option value="AF12">AF12</option>
+                                <option value="AF11">AF11</option>
+                                <option value="CS1">CS1</option>
+                                <option value="DEFAULT">DEFAULT</option>
+
+           </select>
+                        </div>
+                        <input type="hidden" id="type" name="type" value="">
+                        <button type="submit" class="btn btn-success btn-block" ><span
+                                class="glyphicon glyphicon-ok" ></span> OK
+                        </button>
+                    </form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+            <!-- Delete Modal -->
+ <div class="modal fade" id="kt_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											</button>
+										</div>
+										<div class="modal-body">
+                                            <p>Are you sure you?</p>
+
+											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-danger" data-dismiss="modal" id="delete">Delete</button>
+										</div>
+									</div>
+								</div>
+							</div>
+    <div class="kt-portlet kt-portlet--mobile" style="margin-left:40px; margin-right:40px">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Application Table
+                </h3>
+
+            </div>
+{#            <div class="kt-portlet__head-toolbar">#}
+{#                <div class="kt-portlet__head-wrapper">#}
+{#                    <div class="kt-portlet__head-actions">#}
+{#                        <select class="costum-select" id="topoSelect">#}
+{#                            <option value="" disabled selected>Select a topologie</option>#}
+{#                        </select>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+        <div class="kt-portlet__body">
+
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>App Name</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Drop Probability</th>
+                    <th>DSCP</th>
+                    <th style='width:15%' >Action</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_business_type").change(function () {
+      var url = $("#app_form").attr("data-application-url");
+      var business_type_id = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'business_type': business_type_id
+        },
+        success: function (data) {
+          $("#id_business_app").html(data);
+        }
+      });
+
+    });
+
+
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        var url1 = 'http://localhost:8000/api/v1/applications?policy_id={{ police_id }}';
+        var periodUrl = '';
+        var table;
+        var periodTable;
+        var periodTopo = '';
+        var startPeriod = '';
+        var endPeriod = '';
+        $(document).ready(function () {
+            table = $('#example').DataTable({
+                ajax: {
+      url: url1,
+      dataSrc: ""
+    },
+    columns: [
+        { "data": "app_name" },
+        { "data": "app_category"},
+        { "data": "app_priority"},
+        { "data": "drop_prob"},
+        { "data": "mark"},
+         {
+            "data": null,
+            "defaultContent": '<button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#kt_modal_4" >Edit</button>' + '&nbsp;&nbsp' +
+            '<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#kt_modal_3">Delete</button>'
+        }
+    ]
+            });
+
+            url1 = 'http://localhost:8000/api/v1/applications?policy_id={{ police_id }}';
+            table.ajax.url(url1).load();
+            reloadDataTable();
+        });
+let id = 0;
+        $('#example tbody').on('click', 'button', function () {
+    let data = table.row($(this).parents('tr')).data();
+    let class_name = $(this).attr('class');
+    if (class_name == 'btn btn-sm btn-info') {
+        // EDIT button
+        $('#mark').val(data['mark']);
+        $('#type').val('edit');
+        $('#modal_title').text('EDIT');
+        $("#myModal").modal();
+    } else {
+        // DELETE button
+        $('#modal_title').text('DELETE');
+        $("#confirm").modal();
+    }
+       id = data['id'];
+
+});
+        $('#form1').on('submit', function (e) {
+    e.preventDefault();
+    let $this = $(this);
+    let type = $('#type').val();
+    let method = '';
+    let url = 'http://localhost:8000/api/v1/applications/';
+    if (type == 'new') {
+        // new
+        method = 'POST';
+    } else {
+        // edit
+        url = url + id + '/';
+        method = 'PUT';
+    }
+
+    $.ajax({
+        url: url,
+        method: method,
+        data: $this.serialize(),
+        success: function(data, textStatus, jqXHR) {
+         table.ajax.url(url1).load();
+         reloadDataTable();
+         $('#kt_modal_4').modal('hide');
+         $('.modal-backdrop').remove();
+    }
+    })
+});
+
+
+        $('#kt_modal_3').on('click', '#delete', function (e) {
+    $.ajax({
+        url: 'http://localhost:8000/api/v1/applications/' + id + '/',
+        method: 'DELETE',
+        success: function(data, textStatus, jqXHR) {
+         table.ajax.url(url1).load();
+         reloadDataTable();
+    }
+    })
+});
+
+        function reloadDataTable() {
+            setInterval(function () {
+                table.ajax.reload();
+            }, 5000);
+        }
+
+
+
+    </script>
+
+
+{%endblock%}

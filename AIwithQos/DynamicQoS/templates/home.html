@@ -1,0 +1,227 @@
+{% extends 'base2.html'%}
+{% block content%}
+        {% load staticfiles %}
+    <!-- end:: Header -->
+					<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+						<!-- begin:: Content Head -->
+						<div class="kt-subheader   kt-grid__item" id="kt_subheader">
+							<div class="kt-subheader__main">
+								<h3 class="kt-subheader__title">Dashboard</h3>
+								<span class="kt-subheader__separator kt-subheader__separator--v"></span>
+
+
+								<div class="kt-input-icon kt-input-icon--right kt-subheader__search kt-hidden">
+									<input type="text" class="form-control" placeholder="Search order..." id="generalSearch">
+									<span class="kt-input-icon__icon kt-input-icon__icon--right">
+										<span><i class="flaticon2-search-1"></i></span>
+									</span>
+								</div>
+							</div>
+							<div class="kt-subheader__toolbar">
+
+							</div>
+						</div>
+
+						<!-- end:: Content Head -->
+
+						<!-- begin:: Content -->
+						<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+
+							<!--Begin::Dashboard 1-->
+
+							<!--Begin::Section-->
+							<div class="row">
+								<div class="col-xl-12">
+
+									<!--begin:: Widgets/Activity-->
+									<div class="kt-portlet kt-portlet--fit kt-portlet--head-lg kt-portlet--head-overlay kt-portlet--skin-solid kt-portlet--height-fluid">
+										<div class="kt-portlet__head kt-portlet__head--noborder kt-portlet__space-x">
+											<div class="kt-portlet__head-label">
+
+											</div>
+											<div class="kt-portlet__head-toolbar">
+
+												<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right">
+													<ul class="kt-nav">
+														<li class="kt-nav__section kt-nav__section--first">
+															<span class="kt-nav__section-text">Finance</span>
+														</li>
+														<li class="kt-nav__item">
+															<a href="#" class="kt-nav__link">
+																<i class="kt-nav__link-icon flaticon2-graph-1"></i>
+																<span class="kt-nav__link-text">Statistics</span>
+															</a>
+														</li>
+														<li class="kt-nav__item">
+															<a href="#" class="kt-nav__link">
+																<i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+																<span class="kt-nav__link-text">Events</span>
+															</a>
+														</li>
+														<li class="kt-nav__item">
+															<a href="#" class="kt-nav__link">
+																<i class="kt-nav__link-icon flaticon2-layers-1"></i>
+																<span class="kt-nav__link-text">Reports</span>
+															</a>
+														</li>
+														<li class="kt-nav__section kt-nav__section--first">
+															<span class="kt-nav__section-text">HR</span>
+														</li>
+														<li class="kt-nav__item">
+															<a href="#" class="kt-nav__link">
+																<i class="kt-nav__link-icon flaticon2-calendar-4"></i>
+																<span class="kt-nav__link-text">Notifications</span>
+															</a>
+														</li>
+														<li class="kt-nav__item">
+															<a href="#" class="kt-nav__link">
+																<i class="kt-nav__link-icon flaticon2-file-1"></i>
+																<span class="kt-nav__link-text">Files</span>
+															</a>
+										Activity				</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<div class="kt-portlet__body kt-portlet__body--fit">
+											<div class="kt-widget17">
+												<div class="kt-widget17__visual kt-widget17__visual--chart kt-portlet-fit--top kt-portlet-fit--sides" style="background-image: url({% static 'assets/media/logos/login-bg.png' %}); background-size: 25%;background-repeat: repeat ">
+													<div class="kt-widget17__chart" style="height:220px;">
+
+													</div>
+												</div>
+												<div class="kt-widget17__stats">
+													<div class="kt-widget17__items">
+														<div class="kt-widget17__item">
+															<span class="kt-widget17__icon">
+																<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--brand">
+																	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																		<rect id="bound" x="0" y="0" width="24" height="24" />
+																		<path d="M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z" id="Combined-Shape" fill="#000000" />
+																		<rect id="Rectangle-Copy-2" fill="#000000" opacity="0.3" transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519) " x="16.3255682" y="2.94551858" width="3" height="18" rx="1" />
+																	</g>
+																</svg> </span>
+															<span class="kt-widget17__subtitle">
+																<a href="{% url 'Topologies' %}"> Topologies </a>
+															</span>
+
+														</div>
+														<div class="kt-widget17__item" >
+															<span class="kt-widget17__icon">
+																<svg xmlns="http://www.w3.org/2000/svg"   xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--success">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="bound" x="0" y="0" width="24" height="24"/>
+        <rect id="Rectangle-62-Copy" fill="#000000" opacity="0.3" x="7" y="4" width="3" height="13" rx="1.5"/>
+        <rect id="Rectangle-62-Copy-2" fill="#000000" opacity="0.3" x="12" y="9" width="3" height="8" rx="1.5"/>
+        <path d="M5,19 L20,19 C20.5522847,19 21,19.4477153 21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 C4.55228475,3 5,3.44771525 5,4 L5,19 Z" id="Path-95" fill="#000000" fill-rule="nonzero"/>
+        <rect id="Rectangle-62-Copy-4" fill="#000000" opacity="0.3" x="17" y="11" width="3" height="6" rx="1.5"/>
+    </g>
+</svg> </span>
+															<span class="kt-widget17__subtitle">
+                                                                <a href="{% url 'FlowTable' %}">QoS Monitoring</a>
+															</span>
+
+														</div>
+													</div>
+													<div class="kt-widget17__items">
+														<div class="kt-widget17__item" onclick=&quot;location.href="{% url 'Charts' %}"&quot;>
+															<span class="kt-widget17__icon">
+																<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--warning">
+												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+													<rect id="bound" x="0" y="0" width="24" height="24"></rect>
+													<rect id="Rectangle-62-Copy" fill="#000000" opacity="0.3" x="13" y="4" width="3" height="16" rx="1.5"></rect>
+													<rect id="Rectangle-62-Copy-2" fill="#000000" x="8" y="9" width="3" height="11" rx="1.5"></rect>
+													<rect id="Rectangle-62-Copy-4" fill="#000000" x="18" y="11" width="3" height="9" rx="1.5"></rect>
+													<rect id="Rectangle-62-Copy-3" fill="#000000" x="3" y="13" width="3" height="7" rx="1.5"></rect>
+												</g>
+											</svg> </span>
+															<span class="kt-widget17__subtitle">
+                                                                <a href="{% url 'policies' %}">Quality Of Service</a>
+															</span>
+
+														</div>
+														<div class="kt-widget17__item">
+															<span class="kt-widget17__icon">
+																<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon kt-svg-icon--danger">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M17,12 L18.5,12 C19.3284271,12 20,12.6715729 20,13.5 C20,14.3284271 19.3284271,15 18.5,15 L5.5,15 C4.67157288,15 4,14.3284271 4,13.5 C4,12.6715729 4.67157288,12 5.5,12 L7,12 L7.5582739,6.97553494 C7.80974924,4.71225688 9.72279394,3 12,3 C14.2772061,3 16.1902508,4.71225688 16.4417261,6.97553494 L17,12 Z" id="Combined-Shape" fill="#000000"></path>
+        <rect id="Rectangle-23" fill="#000000" opacity="0.3" x="10" y="16" width="4" height="4" rx="2"></rect>
+    </g>
+</svg> </span>
+															<span class="kt-widget17__subtitle">
+                                                                <a href="{% url 'all_tuning' %}">Tuning</a>
+
+															</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!--end:: Widgets/Activity-->
+								</div>
+								<div class="col-xl-4">
+
+
+								</div>
+							</div>
+
+							<!--End::Section-->
+
+
+							<!--Begin::Section-->
+							<div class="row">
+								<div class="col-xl-8">
+
+
+								</div>
+								<div class="col-xl-4">
+
+
+								</div>
+							</div>
+
+							<!--End::Section-->
+
+							<!--Begin::Section-->
+							<div class="row">
+								<div class="col-xl-4">
+
+
+								</div>
+								<div class="col-xl-4">
+
+
+								</div>
+								<div class="col-xl-4">
+
+
+								</div>
+							</div>
+
+							<!--End::Section-->
+
+							<!--Begin::Section-->
+							<div class="row">
+								<div class="col-xl-4">
+
+
+								</div>
+								<div class="col-xl-4">
+								</div>
+								<div class="col-xl-4">
+
+
+								</div>
+							</div>
+
+							<!--End::Section-->
+
+							<!--End::Dashboard 1-->
+						</div>
+
+						<!-- end:: Content -->
+					</div>
+{% endblock %}

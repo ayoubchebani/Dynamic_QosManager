@@ -1,0 +1,175 @@
+{% extends 'base2.html'%}
+{% block content%}
+
+    <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+        <div class="kt-subheader__main">
+                <h3 class="kt-subheader__title">Topology Dashboard</h3>
+                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
+
+
+                <div class="kt-input-icon kt-input-icon--right kt-subheader__search kt-hidden">
+                    <input type="text" class="form-control" placeholder="Search order..." id="generalSearch">
+                    <span class="kt-input-icon__icon kt-input-icon__icon--right">
+                        <span><i class="flaticon2-search-1"></i></span>
+                    </span>
+                </div>
+            </div>
+            <div class="kt-subheader__toolbar">
+
+            </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px; margin-bottom: 48px">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+              <i class="fa fa-folder-open"></i> List Topologies</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {% for topo in topologies %}
+                    <li class="list-group-item">
+                            <div>
+                                <i class="fa fa-li">
+                                </i> <h5 style="display: inline-block">{{ topo.topology_name }}</h5>
+
+                                <span class="pull-right">
+                                    <a data-id="delete" class="mr-3 d-inline-block pull-right" id="{{ topo.id }}"  ><i class="fa fa-trash"  ></i></a>
+                                    <a class="mr-3 d-inline-block pull-right" href="{% url 'start_m' topo.id %}" ><i class="fa fa-chart-area"></i></a>
+
+
+                                    <a  id="{{ topo.id }}" class="mr-3 d-inline-block pull-right btn-icon-only"  ><i class="fa fa-wrench"></i></a>
+                                    <a class="mr-3 d-inline-block pull-right" href="{% url 'drag_drop' topo.id %}" ><i class="fa fa-sitemap"></i></a>
+
+
+                                </span>
+                            </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <a  class="card-footer clearfix small z-1" href="#">
+              <span class="float-left">View all</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+              <i class="fa fa-plus"></i> New Topology</div>
+            <div class="card-body">
+                <form method="POST" action="{% url 'AddTopology' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                    <div class="col-md-8">
+                        <label for="exampleInputName">Topology name:</label>
+                        {{ topology.Name}}
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <label for="exampleInputLastName">Description:</label>
+                            {{ topology.TopologyDesc}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-8">
+                            <button type="submit" class="btn btn-primary btn-block" >Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="modal fade" id="kt_modal_3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											</button>
+										</div>
+										<div class="modal-body">
+                                            <p>Are you sure you want to delete the topology ?</p>
+
+											</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											<button  id="delete" type="button" class="btn btn-danger">Delete</button>
+										</div>
+									</div>
+								</div>
+							</div>
+{#    modal congitr#}
+    <div class="modal fade" id="kt_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Configure monitor</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											</button>
+										</div>
+										<div class="modal-body">
+										 <form id="form1" role="form" method="post" action="{% url 'configure_m' %}">
+{% csrf_token %}
+                        <div class="form-group">
+            <label for="destination">
+                <span class="glyphicon glyphicon-file">
+                </span> Monitoring server</label>
+                            <input type="text" name="destination" id="destination">
+                            <input type="hidden" id="type" name="topo_idk" >
+                        </div>
+
+                        <button type="submit" class="btn btn-success btn-block" ><span
+                                class="glyphicon glyphicon-ok" ></span> Configure
+                        </button>
+                    </form>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+{%endblock%}
+
+
+
+{% block scripts %}
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+    $( ".btn-icon-only" ).click(function() {
+        let topo_id = $(this).attr('id');
+
+        // EDIT button
+         console.log("khra");
+         $('#type').val(topo_id);
+        $("#kt_modal_4").modal('show');
+});
+    var main_id = 0;
+     $( "a[data-id='delete']" ).click(function() {
+         main_id = $(this).attr('id');
+
+        // EDIT button
+         console.log("id");
+        $("#kt_modal_3").modal('show');
+
+});
+     $('#kt_modal_3').on('click', '#delete', function (e) {
+    $.ajax({
+        url: '/delete_topology/'+main_id,
+        method: 'GET',
+        success: function(data, textStatus, jqXHR) {
+            location.reload();
+
+    }
+    })
+});
+
+
+    </script>
+{% endblock %}
